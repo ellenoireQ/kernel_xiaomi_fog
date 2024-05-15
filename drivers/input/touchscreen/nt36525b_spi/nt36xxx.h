@@ -49,7 +49,6 @@
 #include "../lct_tp_selftest.h"
 #include "../lct_tp_work.h"
 #include "../lct_tp_grip_area.h"
-#include "../lct_tp_gesture.h"
 #define NVT_DEBUG 1
 
 //---GPIO number---

@@ -217,8 +217,10 @@ static ssize_t double_tap_store(struct kobject *kobj,
 
 	if (val == 1){
 		lct_nvt_tp_gesture_callback(true);
+		NVT_LOG("State double_tap_store TRUE\n");
 	} else if (val == 0){
 		lct_nvt_tp_gesture_callback(false);
+		NVT_LOG("State double_tap_store FALSE\n");
 	}
 
     return count;

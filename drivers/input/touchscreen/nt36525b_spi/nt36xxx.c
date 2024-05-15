@@ -2409,7 +2409,6 @@ static int32_t nvt_ts_probe(struct spi_device *client)
 		NVT_LOG("init_lct_tp_info Succeeded!\n");
 	}
 
-/*
 #if WAKEUP_GESTURE
 	ret = init_lct_tp_gesture(lct_nvt_tp_gesture_callback);
 	if (ret < 0) {
@@ -2419,7 +2418,7 @@ static int32_t nvt_ts_probe(struct spi_device *client)
 		NVT_LOG("init_lct_tp_gesture Succeeded!\n");
 	}
 #endif
-*/
+
 #if LCT_TP_GRIP_AREA_EN
 	ret = init_lct_tp_grip_area(lct_tp_set_screen_angle_callback, lct_tp_get_screen_angle_callback);
 	if (ret < 0) {
@@ -2525,12 +2524,10 @@ err_init_lct_tp_grip_area_failed:
 uninit_lct_tp_grip_area();
 #endif
 
-/*
 #if WAKEUP_GESTURE
 err_init_lct_tp_gesture_failed:
 uninit_lct_tp_gesture();
 #endif
-*/
 
 err_init_lct_tp_info_failed:
 uninit_lct_tp_info();
@@ -2658,11 +2655,9 @@ static int32_t nvt_ts_remove(struct spi_device *client)
 	uninit_lct_tp_work();
 #endif
 uninit_lct_tp_info();
-/*
 #if WAKEUP_GESTURE
 	uninit_lct_tp_gesture();
 #endif
-*/
 #if LCT_TP_GRIP_AREA_EN
 	uninit_lct_tp_grip_area();
 #endif
@@ -2767,11 +2762,9 @@ static void nvt_ts_shutdown(struct spi_device *client)
 #if LCT_TP_WORK_EN
 	uninit_lct_tp_work();
 #endif
-/*
 #if WAKEUP_GESTURE
 	uninit_lct_tp_gesture();
 #endif
-*/
 uninit_lct_tp_info();
 
 #if NVT_TOUCH_MP

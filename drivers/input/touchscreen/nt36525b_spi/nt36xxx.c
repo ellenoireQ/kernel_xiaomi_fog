@@ -2266,6 +2266,15 @@ static int32_t nvt_ts_probe(struct spi_device *client)
 		input_set_capability(ts->input_dev, EV_KEY, gesture_key_array[retry]);
 #endif
 
+	#ifdef CONFIG_TP_COMMON
+		ret = tp_common_set_double_tap_ops(&double_tap_ops);
+
+		if (ret < 0) {
+        NVT_ERR("%s: Failed to create double_tap node err=%d\n",
+                  __func__, ret);
+    }
+	#endif
+
 	sprintf(ts->phys, "input/ts");
 	ts->input_dev->name = NVT_TS_NAME;
 	ts->input_dev->phys = ts->phys;
@@ -3220,15 +3229,6 @@ static int32_t __init nvt_driver_init(void)
 //		goto err_driver;
 //	}
 #endif
-
-	#ifdef CONFIG_TP_COMMON
-		int rt = tp_common_set_double_tap_ops(&double_tap_ops);
-		
-		if (rt < 0) {
-        NVT_ERR("%s: Failed to create double_tap node err=%d\n",
-                  __func__, ret);
-    }
-	#endif
 
 	//---add spi driver---
 	ret = spi_register_driver(&nvt_spi_driver);

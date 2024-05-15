@@ -195,7 +195,14 @@ int nvt_gesture_switch(struct input_dev *dev, unsigned int type, unsigned int co
 static ssize_t double_tap_show(struct kobject *kobj,
                                struct kobj_attribute *attr, char *buf)
 {
-    return sprintf(buf, "%d\n", ts->is_gesture_mode);
+	int state;
+
+	if (ts->is_gesture_mode)
+		state = 1;
+	else
+		state = 0;
+
+    return sprintf(buf, "%d", state);
 }
 
 static ssize_t double_tap_store(struct kobject *kobj,
@@ -206,9 +213,14 @@ static ssize_t double_tap_store(struct kobject *kobj,
 
     rc = kstrtoint(buf, 10, &val);
     if (rc)
-    return -EINVAL;
+		return -EINVAL;
 
-    ts->is_gesture_mode = !!val;
+	if (val == 1){
+		lct_nvt_tp_gesture_callback(true);
+	} else if (val == 0){
+		lct_nvt_tp_gesture_callback(false);
+	}
+
     return count;
 }
 

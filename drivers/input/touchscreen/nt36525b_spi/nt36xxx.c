@@ -2409,7 +2409,8 @@ static int32_t nvt_ts_probe(struct spi_device *client)
 		NVT_LOG("init_lct_tp_info Succeeded!\n");
 	}
 
-/*#if WAKEUP_GESTURE
+/*
+#if WAKEUP_GESTURE
 	ret = init_lct_tp_gesture(lct_nvt_tp_gesture_callback);
 	if (ret < 0) {
 		NVT_ERR("init_lct_tp_gesture Failed!\n");
@@ -2523,12 +2524,14 @@ err_alloc_work_thread_failed:
 err_init_lct_tp_grip_area_failed:
 uninit_lct_tp_grip_area();
 #endif
+
 /*
 #if WAKEUP_GESTURE
 err_init_lct_tp_gesture_failed:
 uninit_lct_tp_gesture();
 #endif
 */
+
 err_init_lct_tp_info_failed:
 uninit_lct_tp_info();
 

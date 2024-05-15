@@ -2397,8 +2397,6 @@ static struct tp_common_ops double_tap_ops = {
 		NVT_LOG("init_lct_tp_info Succeeded!\n");
 	}
 
-#if WAKEUP_GESTURE
-	ret = 
 /*#if WAKEUP_GESTURE
 	ret = init_lct_tp_gesture(lct_nvt_tp_gesture_callback);
 	if (ret < 0) {

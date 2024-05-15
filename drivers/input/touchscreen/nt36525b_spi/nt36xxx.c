@@ -28,6 +28,9 @@
 #include <linux/of_irq.h>
 #include <linux/pm_runtime.h>
 
+#ifdef CONFIG_TP_COMMON
+#include <linux/input/tp_common.h>
+#endif
 #if defined(CONFIG_FB)
 #if defined(CONFIG_DRM_PANEL)
 #include <drm/drm_panel.h>

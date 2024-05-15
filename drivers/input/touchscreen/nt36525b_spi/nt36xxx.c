@@ -2056,6 +2056,33 @@ static int32_t nvt_ts_probe(struct spi_device *client)
 	}
 #endif
 
+#ifdef CONFIG_TP_COMMON
+static ssize_t double_tap_show(struct kobject *kobj,
+                               struct kobj_attribute *attr, char *buf)
+{
+    return sprintf(buf, "%d\n", ts->is_gesture_mode);
+}
+
+static ssize_t double_tap_store(struct kobject *kobj,
+                                struct kobj_attribute *attr, const char *buf,
+                                size_t count)
+{
+    int rc, val;
+
+    rc = kstrtoint(buf, 10, &val);
+    if (rc)
+    return -EINVAL;
+
+    ts->is_gesture_mode = !!val;
+    return count;
+}
+
+static struct tp_common_ops double_tap_ops = {
+    .show = double_tap_show,
+    .store = double_tap_store
+};
+#endif
+
 	NVT_LOG("start\n");
   	spi_geni_master_dev = NULL;
 
@@ -2370,6 +2397,8 @@ static int32_t nvt_ts_probe(struct spi_device *client)
 		NVT_LOG("init_lct_tp_info Succeeded!\n");
 	}
 
+#if WAKEUP_GESTURE
+	ret = 
 /*#if WAKEUP_GESTURE
 	ret = init_lct_tp_gesture(lct_nvt_tp_gesture_callback);
 	if (ret < 0) {
@@ -3190,6 +3219,15 @@ static int32_t __init nvt_driver_init(void)
 //		goto err_driver;
 //	}
 #endif
+
+	#ifdef CONFIG_TP_COMMON
+		int rt = tp_common_set_double_tap_ops(&double_tap_ops);
+		
+		if (rt < 0) {
+        NVT_ERR("%s: Failed to create double_tap node err=%d\n",
+                  __func__, ret);
+    }
+	#endif
 
 	//---add spi driver---
 	ret = spi_register_driver(&nvt_spi_driver);
